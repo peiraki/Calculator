@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;  
+            box-sizing: border-box;
+        }
+        .calc {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            max-width: max-content;
+            gap:5px;
+        }
+        .calc div {
+            background-color: rgb(48, 15, 63);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-size: 2rem;
+            border:2px solid rgb(90, 47, 133);
+            cursor: pointer;
+            color:white;
+            animation: startanimetion .4s linear;
+        }
+        .calcplace {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap:5px;
+            margin-top: 10px;
+            border: 2px solid black;
+            max-width: max-content;
+            padding: 5px;
+            margin: 20px auto;
+            background-color: rgb(221, 202, 238);
+        }
+        #calcdisplay {
+            height: 70px;
+            width: 375px;
+            background-color: rgb(58, 21, 61);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: right;
+            align-items: center;
+            font-size: 3rem;
+            padding-right: 20px;
+            color:white;
+            animation: shakenumbers .5s linear;
+            padding: -5px;
+            position: relative;
+        }
+        #calcdisplay::before {
+            content: 'BK Calculator';
+            position: absolute;
+            left: 50%;
+            top:50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.05;
+            font-size: 2rem;
+        }
+        @keyframes shakenumbers {
+            from {
+                transform: scale(0.7);
+            }            
+        }
+        @keyframes startanimetion {
+            from {
+                transform: scale(0.8);
+            }
+        }
+        sup {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calcplace">
+        <div id="calcdisplay"></div>
+        <div class="calc">
+            <div onclick="fesvi()" class="precent"><sup>2</sup>√x</div>
+            <div onclick="square()" class="operator quart">x<sup>2</sup></div>
+            <div onclick="clearDisplay()" class="operator ce">CE</div>
+            <div onclick="deleteOne()" class="operator delete">Del</div>
+            <div onclick="number(this)" class="operator minus">-</div>
+            <div onclick="number(this)" class="number">7</div>
+            <div onclick="number(this)" class="number">8</div>
+            <div onclick="number(this)" class="number">9</div>
+            <div onclick="number(this)" class="operator divis">/</div>
+            <div onclick="number(this)" class="number">4</div>
+            <div onclick="number(this)" class="number">5</div>
+            <div onclick="number(this)" class="number">6</div>
+            <div onclick="number(this)" class="operator multi">*</div> 
+            <div onclick="number(this)" class="number">1</div>
+            <div onclick="number(this)" class="number">2</div>
+            <div onclick="number(this)" class="number">3</div>
+            <div onclick="number(this)" class="operator plus">+</div>
+            <div onclick="number(this)" class="number">.</div>
+            <div onclick="number(this)" class="number">0</div>
+            <div onclick="equal()" id="equals" class="equals">=</div>
+        </div>
+    </div>
+    
+</body>
+<script>
+    let x
+    function fesvi() {
+       let x =  Math.sqrt(calcdisplay.innerText)
+        calcdisplay.innerText = x
+        stringLength2()
+    }
+    function stringLength2(){
+        let displayLength = calcdisplay.innerText.length
+        if(displayLength > 12){
+                calcdisplay.style.fontSize = "1.5rem"
+            }else {
+                calcdisplay.style.fontSize = "3rem"
+            }
+    }
+    function number(num) {
+            calcdisplay.innerText += num.innerText
+            stringLength2()
+    }
+    function equal() {
+        let x = eval(calcdisplay.innerText)
+        calcdisplay.innerText = x
+        stringLength2()
+    }
+    function clearDisplay() {
+        calcdisplay.innerText = null
+    }
+    function deleteOne() { 
+        let deletelasts = calcdisplay.innerText
+            deletelasts = deletelasts.slice(0, -1)
+            calcdisplay.innerText = deletelasts
+            stringLength2()
+    }
+    function square() {
+        calcdisplay.innerText *= calcdisplay.innerText
+        stringLength2()
+    }
+    equals.addEventListener('click', (ev)=>{
+    });
+    document.addEventListener('keypress', (event) => {
+        let keyCode = event.keyCode ? event.keyCode : event.which
+        if(keyCode === 13){
+            equals.click()
+        }
+    })
+</script>
+</html>
